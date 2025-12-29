@@ -36,11 +36,16 @@ rl.on('close', () => {
   for (const [key, value] of prefectureDataMap) {
     value.change = value.after / value.before;
   }
+
   // 変化率が大きい順にソート
-  const rankignArray = Array.from(prefectureDataMap) // Mapを配列に変換
-  // console.log(rankignArray);
-  rankignArray.sort((pair1, pair2) => {
+  const rankingArray = Array.from(prefectureDataMap) // Mapを配列に変換
+  rankingArray.sort((pair1, pair2) => {
     return pair2[1].change - pair1[1].change;
   });
-  console.log(rankignArray);
+
+  // 出力の形式を調整
+  const rankingStrings = rankingArray.map(([key, value]) => {
+    return `${key}:${value.before}=>${value.after} 変化率:${value.change}`
+  });
+  console.log(rankingStrings);
 });
